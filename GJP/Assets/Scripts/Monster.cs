@@ -1,6 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+
+[System.Serializable]
+public struct Tell{
+    public float time;
+    public UnityEvent tell_event;
+}
 
 public class Monster : MonoBehaviour
 {
@@ -11,12 +19,20 @@ public class Monster : MonoBehaviour
     
     public float ActiveTime;
 
+    public float timeStep = 0.5f;
+
+    private int currentTell;
+    public List<Tell> tells;
+
+    public UnityEvent cleanUpEvent;
+
     // Start is called before the first frame update
 
     void Start()
     {
         currentCoroutine = null;
         manager = GameObject.FindObjectOfType<MonsterManager>();
+        currentTell = 0;
     }
     void OnEnable()
     {
@@ -32,9 +48,14 @@ public class Monster : MonoBehaviour
         float passedTime = 0.0f;
         while(passedTime < ActiveTime)
         {
+            if(currentTell < tells.Count && tells[currentTell].time >= passedTime)
+            {
+                tells[currentTell].tell_event.Invoke();
+                currentTell++;
+            }
             Debug.Log("Monster arriving in " + (ActiveTime - passedTime).ToString() + "seconds");
-            yield return new WaitForSecondsRealtime(1.0f);
-            passedTime += 1.0f;
+            yield return new WaitForSecondsRealtime(timeStep);
+            passedTime += timeStep;
         }
 
         //checo se as condições estão sendo atendidas
@@ -43,6 +64,7 @@ public class Monster : MonoBehaviour
             if(!condition.ConditionIsMet())
             {
                 Debug.Log("Player loses");
+                cleanUpEvent.Invoke();
                 yield break;
             }
         }
@@ -50,6 +72,7 @@ public class Monster : MonoBehaviour
         
         //destrói monstro
         Debug.Log("monster was repelled");
+        cleanUpEvent.Invoke();
         manager.NextMonster();
         yield break;
     }
@@ -59,4 +82,6 @@ public class Monster : MonoBehaviour
     {
         
     }
+
+
 }
