@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         //botão esquerdo do mouse determina posição desejada
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) //se apertei o botão && o mouse não está sobre algum elemento da UI
         {
             //traço um raio até o plano inclinado, e esse plano determina a posição que eu quero ir
             //Debug.Log(Input.mousePosition);
