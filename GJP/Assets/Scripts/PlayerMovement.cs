@@ -46,6 +46,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 animator.SetBool("LookLeft", false);
             }
+
+            //de qualquer forma, está andando
+            animator.SetBool("Walking", true);
+        }
+        else
+        {
+            animator.SetBool("Walking", false);
         }
 
         
