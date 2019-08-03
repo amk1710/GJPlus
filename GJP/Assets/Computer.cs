@@ -13,11 +13,14 @@ public class Computer : MonoBehaviour
     float chargeStatus = 0.0f;
 
     private HideCondition hideCondition;
+
+    private bool alreadyWon;
     
     // Start is called before the first frame update
     void Start()
     {
         hideCondition = GetComponent<HideCondition>();
+        alreadyWon = false;
     }
 
     // Update is called once per frame
@@ -30,9 +33,10 @@ public class Computer : MonoBehaviour
             chargeSlider.value = chargeStatus;
         }
 
-        if(chargeStatus >= 1.0f)
+        if(chargeStatus >= 1.0f && !alreadyWon)
         {
-            Debug.Log("You Win!");
+            GameObject.FindObjectOfType<UIManager>().WinGame();
+            alreadyWon = true;
         }
     }
 }

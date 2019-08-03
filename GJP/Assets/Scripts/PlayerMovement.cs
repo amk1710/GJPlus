@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public float distanceTolerance;
     private bool hidden;
 
-    private SpriteRenderer sprite;
+    public SpriteRenderer spriteL;
+    public SpriteRenderer spriteR;
+    private Animator animator;
 
     private Vector3 desiredPosition;
     
@@ -16,14 +18,15 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         desiredPosition = transform.position;
-        sprite = GetComponent<SpriteRenderer>();
         hidden = false;
+        animator = GetComponent<Animator>();
     }
 
     public void SetHidden(bool b)
     {
         hidden = b;
-        sprite.enabled = !hidden;
+        spriteL.enabled = !hidden;
+        spriteR.enabled = !hidden;
         
     }
 
@@ -33,7 +36,18 @@ public class PlayerMovement : MonoBehaviour
         if(Vector3.Distance(transform.position, desiredPosition) >= distanceTolerance)
         {
             transform.position = Vector3.MoveTowards(transform.position, desiredPosition, movementSpeed * Time.deltaTime);
+            
+            //seta direção, right e left:
+            if(transform.position.x > desiredPosition.x)
+            {
+                animator.SetBool("LookLeft", true);
+            }
+            else if(transform.position.x < desiredPosition.x)
+            {
+                animator.SetBool("LookLeft", false);
+            }
         }
+
         
     }
 

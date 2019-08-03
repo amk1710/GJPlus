@@ -63,8 +63,8 @@ public class Monster : MonoBehaviour
         {
             if(!condition.ConditionIsMet())
             {
-                Debug.Log("Player loses");
                 cleanUpEvent.Invoke();
+                GameObject.FindObjectOfType<UIManager>().LoseGame(transform.GetSiblingIndex());
                 yield break;
             }
         }
