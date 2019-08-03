@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("Walking", false);
         }
 
-        
     }
 
     public void SetDesiredPosition(Vector3 pos)
