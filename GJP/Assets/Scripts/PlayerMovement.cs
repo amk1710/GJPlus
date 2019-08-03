@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed;
+    public float distanceTolerance;
     private bool hidden;
 
     private SpriteRenderer sprite;
@@ -29,7 +30,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, desiredPosition, movementSpeed * Time.deltaTime);
+        if(Vector3.Distance(transform.position, desiredPosition) >= distanceTolerance)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, desiredPosition, movementSpeed * Time.deltaTime);
+        }
+        
     }
 
     public void SetDesiredPosition(Vector3 pos)
@@ -37,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
         //se player está escondido, bloqueia movimento
         if(hidden) return;
 
-        pos.z = 0.0f;
         desiredPosition = pos;
     }
 }

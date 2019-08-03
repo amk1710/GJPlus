@@ -39,17 +39,19 @@ public class PlayerInput : MonoBehaviour
             //     Debug.Log("not");
             // }
 
-            // RaycastHit hit;
-            // int layerMask = LayerMask.GetMask("PlanoInclinado");
-            // Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            // if (Physics.Raycast(ray, out hit)) {
-            //     Vector3 desiredPosition = hit.point;
-            //     desiredPosition.z = Mathf.Min(desiredPosition.z, -7.23f);
-            //     Debug.Log(desiredPosition.z);
-            //     playerMovement.SetDesiredPosition(desiredPosition);
-            // }
+            RaycastHit hit;
+            int layerMask = LayerMask.GetMask("PlanoInclinado");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
+                Vector3 desiredPosition = hit.point;
+                //desiredPosition.z = Mathf.Min(desiredPosition.z, -7.23f);
+                //desiredPosition.z = Mathf.Clamp(desiredPosition.z, 0.0f, 20.0f);
+                Debug.Log(desiredPosition);
+                Debug.DrawRay(Camera.main.ScreenToWorldPoint(Input.mousePosition), desiredPosition, Color.red, 1.0f);
+                playerMovement.SetDesiredPosition(desiredPosition);
+            }
             
-            playerMovement.SetDesiredPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            //playerMovement.SetDesiredPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
     }
 
