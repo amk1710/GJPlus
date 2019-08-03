@@ -14,7 +14,7 @@ public class Computer : MonoBehaviour
     float chargeStatus = 0.0f;
 
     public List<AudioClip> audioClips;
-
+    public float WaitTimeSound = 1.0f;
     private HideCondition hideCondition;
 
     private bool alreadyWon;
@@ -25,6 +25,8 @@ public class Computer : MonoBehaviour
         hideCondition = GetComponent<HideCondition>();
         alreadyWon = false;
         au = GetComponent<AudioSource>();
+
+        StartCoroutine("PlaySounds");
     }
 
     // Update is called once per frame
@@ -36,17 +38,24 @@ public class Computer : MonoBehaviour
             chargeStatus += chargeSpeed * Time.deltaTime;
             chargeSlider.value = chargeStatus;
 
-            //
-            if(!au.isPlaying && audioClips.Count > 0)
-            {
-                au.PlayOneShot(audioClips[Random.Range(0, audioClips.Count)]);
-            }
         }
 
         if(chargeStatus >= 1.0f && !alreadyWon)
         {
             GameObject.FindObjectOfType<UIManager>().WinGame();
             alreadyWon = true;
+        }
+    }
+
+    IEnumerator PlaySounds()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(WaitTimeSound);
+            if(!au.isPlaying && audioClips.Count > 0 && hideCondition.ConditionIsMet())
+            {
+                au.PlayOneShot(audioClips[Random.Range(0, audioClips.Count)]);
+            }
         }
     }
 }
