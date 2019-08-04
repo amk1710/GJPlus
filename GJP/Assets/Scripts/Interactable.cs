@@ -11,6 +11,11 @@ public class Interactable : MonoBehaviour
     public UnityEvent InteractEvent;
 
     private Transform Player;
+
+    public float interactionDistance = 3.0f;
+    public float timeInterval_autoInteraction = 2.0f;
+
+    private bool TryToInteract;
     
     // Start is called before the first frame update
     void Start()
@@ -18,6 +23,8 @@ public class Interactable : MonoBehaviour
         playerIsTouching = false;
         condition = GetComponent<BaseCondition>();
         Player = GameObject.FindObjectOfType<PlayerInput>().gameObject.transform;
+
+        TryToInteract = false;
     }
 
     // Update is called once per frame
@@ -25,6 +32,11 @@ public class Interactable : MonoBehaviour
     {
         
         //Debug.Log(playerIsTouching);
+        if(TryToInteract && Vector3.Distance(transform.position, Player.position) < interactionDistance)
+        {
+            Interact();
+            TryToInteract = false;
+        }
     }
 
     public void Interact()
@@ -60,15 +72,39 @@ public class Interactable : MonoBehaviour
         //método não é perfeito, pq só considera centro do player. Mas deve ser bom o suficiente
         //traço um raio saindo da camera, passando pelo centro do player
 
-        RaycastHit hit;
-        int layerMask = LayerMask.GetMask("Interactable");
-        Vector3 screenPoint = Camera.main.WorldToScreenPoint(Player.position);
-        Ray ray = Camera.main.ScreenPointToRay(screenPoint);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) && hit.collider.gameObject == this.gameObject) {
-            //se bateu no interagível, e este interagível é este objeto, 
-            //então player está sobre este objeto, e a interação acontece
+        // RaycastHit hit;
+        // int layerMask = LayerMask.GetMask("Interactable");
+        // Vector3 screenPoint = Camera.main.WorldToScreenPoint(Player.position);
+        // Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+        // if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) && hit.collider.gameObject == this.gameObject) {
+        //     //se bateu no interagível, e este interagível é este objeto, 
+        //     //então player está sobre este objeto, e a interação acontece
+        //     Interact();
+        // }
+        // else
+        // //se o player não está sobreposto
+        // {
+
+        // }
+
+        //se está próximo o suficiente, interage
+        if(Vector3.Distance(transform.position, Player.position) < interactionDistance)
+        {
             Interact();
         }
+        //senão, desloca player até o objeto e seta flag para interagir quando entrar no range
+        else
+        {
+            StartCoroutine(TryToInteract_Coroutine(timeInterval_autoInteraction));
+        }
 
+    }
+
+    IEnumerator TryToInteract_Coroutine(float time)
+    {
+        TryToInteract = true;
+        yield return new WaitForSecondsRealtime(time);
+        TryToInteract = false;
+        yield break;
     }
 }
