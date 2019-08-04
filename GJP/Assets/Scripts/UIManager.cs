@@ -96,10 +96,12 @@ public class UIManager : MonoBehaviour
         Debug.Log("Player loses");
 
         //abre bestiário na página do bixo
-        bestiario.SetActive(true);
-        bestas[currentBesta].SetActive(false);
-        currentBesta = monsterId;
-        bestas[currentBesta].SetActive(true);
+        // bestiario.SetActive(true);
+        // bestas[currentBesta].SetActive(false);
+        // currentBesta = monsterId;
+        // bestas[currentBesta].SetActive(true);
+
+        bestiario.SetActive(false);
 
         //desliga botões inadequados à situação
         NextButton.gameObject.SetActive(false);

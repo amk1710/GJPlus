@@ -30,7 +30,6 @@ public class Interactable : MonoBehaviour
     public void Interact()
     {
         InteractEvent.Invoke();
-        
 
         if(condition is OnOffCondition)
         {
@@ -70,8 +69,6 @@ public class Interactable : MonoBehaviour
             //então player está sobre este objeto, e a interação acontece
             Interact();
         }
-
-
 
     }
 }
