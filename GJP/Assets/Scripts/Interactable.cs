@@ -88,12 +88,13 @@ public class Interactable : MonoBehaviour
         // }
 
         //se está próximo o suficiente, interage
+        Debug.LogWarning(Vector3.Distance(transform.position, Player.position));
         if(Vector3.Distance(transform.position, Player.position) < interactionDistance)
         {
             Interact();
         }
         //senão, desloca player até o objeto e seta flag para interagir quando entrar no range
-        else
+        else if(!TryToInteract)
         {
             StartCoroutine(TryToInteract_Coroutine(timeInterval_autoInteraction));
         }
@@ -103,7 +104,9 @@ public class Interactable : MonoBehaviour
     IEnumerator TryToInteract_Coroutine(float time)
     {
         TryToInteract = true;
+        Debug.LogWarning("set true");
         yield return new WaitForSecondsRealtime(time);
+        Debug.LogWarning("set false");
         TryToInteract = false;
         yield break;
     }

@@ -53,7 +53,7 @@ public class Monster : MonoBehaviour
                 tells[currentTell].tell_event.Invoke();
                 currentTell++;
             }
-            Debug.Log("Monster arriving in " + (ActiveTime - passedTime).ToString() + "seconds");
+            //Debug.Log("Monster arriving in " + (ActiveTime - passedTime).ToString() + "seconds");
             yield return new WaitForSecondsRealtime(timeStep);
             passedTime += timeStep;
         }

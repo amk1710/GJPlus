@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
         //se player está escondido, bloqueia movimento
         if(hidden) return;
 
+        pos.z = 0;
+
         desiredPosition = pos;
     }
 }
