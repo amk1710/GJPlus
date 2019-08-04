@@ -56,10 +56,11 @@ public class Monster : MonoBehaviour
         float passedTime = 0.0f;
         while(passedTime < ActiveTime)
         {
-            if(currentTell < tells.Count && tells[currentTell].time >= passedTime)
+            if(currentTell < tells.Count && tells[currentTell].time <= passedTime)
             {
                 tells[currentTell].tell_event.Invoke();
                 currentTell++;
+                Debug.LogWarning("Incement");
             }
             Debug.Log("Monster arriving in " + (ActiveTime - passedTime).ToString() + "seconds");
             yield return new WaitForSecondsRealtime(timeStep);

@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public float distanceTolerance;
     private bool hidden;
 
+    public float maxY;
+
     public SpriteRenderer spriteL;
     public SpriteRenderer spriteR;
     private Animator animator;
@@ -63,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         if(hidden) return;
 
         pos.z = 0;
+        pos.y = Mathf.Min(pos.y, maxY);
 
         desiredPosition = pos;
     }

@@ -1440,7 +1440,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2273,6 +2273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   distanceTolerance: 2
+  maxY: 6
   spriteL: {fileID: 1672821944}
   spriteR: {fileID: 577849035}
 --- !u!212 &1518609066
@@ -3280,7 +3281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2047519143
 Transform:
   m_ObjectHideFlags: 0
@@ -3325,7 +3326,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4887,17 +4888,35 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5847392823080381344, guid: f12df87620e443141b127b24a918c172,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5847392823939101880, guid: f12df87620e443141b127b24a918c172,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847392823939101880, guid: f12df87620e443141b127b24a918c172,
+        type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 163554026, guid: f12df87620e443141b127b24a918c172, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 163554026, guid: f12df87620e443141b127b24a918c172, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 602799940, guid: f12df87620e443141b127b24a918c172, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602799940, guid: f12df87620e443141b127b24a918c172, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -8,6 +8,8 @@ public class Interactable : MonoBehaviour
     private bool playerIsTouching;
     private BaseCondition condition;
 
+    private HideCondition hc;
+
     public UnityEvent InteractEvent;
 
     private Transform Player;
@@ -25,6 +27,7 @@ public class Interactable : MonoBehaviour
         Player = GameObject.FindObjectOfType<PlayerInput>().gameObject.transform;
 
         TryToInteract = false;
+        hc = GetComponent<HideCondition>();
     }
 
     // Update is called once per frame
@@ -32,11 +35,11 @@ public class Interactable : MonoBehaviour
     {
         
         //Debug.Log(playerIsTouching);
-        if(TryToInteract && Vector3.Distance(transform.position, Player.position) < interactionDistance)
-        {
-            Interact();
-            TryToInteract = false;
-        }
+        //if(TryToInteract && Vector3.Distance(transform.position, Player.position) < interactionDistance)
+        //{
+        //    Interact();
+        //    TryToInteract = false;
+        //}
     }
 
     public void Interact()
@@ -94,20 +97,20 @@ public class Interactable : MonoBehaviour
             Interact();
         }
         //senão, desloca player até o objeto e seta flag para interagir quando entrar no range
-        else if(!TryToInteract)
-        {
-            StartCoroutine(TryToInteract_Coroutine(timeInterval_autoInteraction));
-        }
+        //else if(!TryToInteract)
+        //{
+        //    StartCoroutine(TryToInteract_Coroutine(timeInterval_autoInteraction));
+        //}
 
     }
 
-    IEnumerator TryToInteract_Coroutine(float time)
-    {
-        TryToInteract = true;
-        Debug.LogWarning("set true");
-        yield return new WaitForSecondsRealtime(time);
-        Debug.LogWarning("set false");
-        TryToInteract = false;
-        yield break;
-    }
+    //IEnumerator TryToInteract_Coroutine(float time)
+    //{
+    //    TryToInteract = true;
+    //    Debug.LogWarning("set true");
+    //    yield return new WaitForSecondsRealtime(time);
+    //    Debug.LogWarning("set false");
+    //    TryToInteract = false;
+    //    yield break;
+    //}
 }
