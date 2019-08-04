@@ -10,9 +10,15 @@ public struct Tell{
     public UnityEvent tell_event;
 }
 
+[System.Serializable]
+public struct MonsterCondition
+{
+    public BaseCondition condition;
+    public bool inverse;
+}
+
 public class Monster : MonoBehaviour
 {
-    public List<BaseCondition> conditions;
     private MonsterManager manager;
 
     private Coroutine currentCoroutine;
@@ -25,6 +31,8 @@ public class Monster : MonoBehaviour
     public List<Tell> tells;
 
     public UnityEvent cleanUpEvent;
+
+    public List<MonsterCondition> conditions;
 
     // Start is called before the first frame update
 
@@ -53,15 +61,17 @@ public class Monster : MonoBehaviour
                 tells[currentTell].tell_event.Invoke();
                 currentTell++;
             }
-            //Debug.Log("Monster arriving in " + (ActiveTime - passedTime).ToString() + "seconds");
+            Debug.Log("Monster arriving in " + (ActiveTime - passedTime).ToString() + "seconds");
             yield return new WaitForSecondsRealtime(timeStep);
             passedTime += timeStep;
         }
 
         //checo se as condições estão sendo atendidas
-        foreach(BaseCondition condition in conditions)
+        foreach(MonsterCondition mc in conditions)
         {
-            if(!condition.ConditionIsMet())
+            //se a condição não estiver sendo cumprida,
+            //(sendo cumprida <==> condition é true e não inverte || condition é false e inverte) ==> xor
+            if(!(mc.condition.ConditionIsMet() ^ mc.inverse))
             {
                 cleanUpEvent.Invoke();
                 GameObject.FindObjectOfType<UIManager>().LoseGame(transform.GetSiblingIndex());
